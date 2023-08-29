@@ -2,6 +2,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * BicycleLock program
+ * @author  Ahmad Abou Hachem
+ * @version 1.5
+ * @since   2023-08-01
+ */
 public class BicycleLock {
     private static int turn = 0;
     private static int countUp = 0;
