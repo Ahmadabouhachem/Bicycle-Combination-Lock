@@ -31,12 +31,12 @@ public class BicycleLock {
             } else if (!isDigits) {
                 System.out.println("Please do not enter letters or special characters!\nPlease try again...");
             } else {  //the combination was entered correctly (4 digit-number)
-                editPinCode(combination);
+                editLockCode(combination);
             }
         }
     }
 
-    public static String editPinCode(String combination) {
+    public static String editLockCode(String combination) {
 
         String[] arrOfStr = combination.split("", 4);  //split the first four inputs of combination
 
