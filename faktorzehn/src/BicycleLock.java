@@ -116,12 +116,13 @@ public class BicycleLock {
             }
         }
         System.out.print("_________________________________________________\n" +
-                        "Please enter a four-digit combination number!\n");
+                "Please enter a four-digit combination number!\n");
         return combination;
     }
 
     public static int countTurnsOne(int num1, int goal) {
-        turn = 0;
+        countUp = 0;
+        countDown = 0;
         int j = num1;
         int k = num1;
         while (lockNumbers[j] != goal) {
@@ -138,7 +139,7 @@ public class BicycleLock {
                 k = 9;
             }
         }
-        return turn += countUp > countDown ? countDown : countUp;
+        return Math.min(countUp, countDown);
     }
 
     public static int countTurnsTwo(int num1, int num2, int goal) {
