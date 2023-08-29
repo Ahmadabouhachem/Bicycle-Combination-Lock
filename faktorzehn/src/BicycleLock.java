@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class ZahlenSchloss {
+public class BicycleLock {
     private static int turn = 0;
     private static int countUp = 0;
     private static int countDown = 0;
@@ -12,48 +12,48 @@ public class ZahlenSchloss {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Geben Sie eine 4-stellige Kombinationsnummer ein!");
+        System.out.println("Please enter a four-digit combination number!");
 
         while (scanner.hasNext()) {
 
-            String startKombination = scanner.next();
+            String combination = scanner.next();
 
-            boolean isDigits = startKombination.matches("\\d+");   //isDigits is true, when String startKombination does only have numbers.
+            boolean isDigits = combination.matches("\\d+");   //isDigits is true, if String combination does only have numbers.
 
-            if (startKombination.length() != 4) {   //when startKombination more or less than 4 digit-number
-                System.out.println("Die eingegebene Kombinationsnummer ist nicht vierstellig!\nVersuchen Sie noch einmal...");
+            if (combination.length() != 4) {   //if combination more or less than 4 digit-number
+                System.out.println("The entered combination number is not four digits!\nPlease try again...");
             } else if (!isDigits) {
-                System.out.println("Bitte keine Buchstaben oder Sonderzeichen eingeben!\nVersuchen Sie noch einmal...");
-            } else {  //the startKombination was entered correctly (4 digit-number)
-                editPinCode(startKombination);
+                System.out.println("Please do not enter letters or special characters!\nPlease try again...");
+            } else {  //the combination was entered correctly (4 digit-number)
+                editPinCode(combination);
             }
         }
     }
 
-    public static String editPinCode(String startKombination) {
+    public static String editPinCode(String combination) {
 
-        String[] arrOfStr = startKombination.split("", 4);  //split the first four inputs of startKombination
+        String[] arrOfStr = combination.split("", 4);  //split the first four inputs of combination
 
-        int[] nummern = {Integer.parseInt(arrOfStr[0]), Integer.parseInt(arrOfStr[1]), Integer.parseInt(arrOfStr[2]), Integer.parseInt(arrOfStr[3])};   //change the input to integer and save it in int array.
+        int[] arrNumbers = {Integer.parseInt(arrOfStr[0]), Integer.parseInt(arrOfStr[1]), Integer.parseInt(arrOfStr[2]), Integer.parseInt(arrOfStr[3])};   //change the input to integer and save it in int array.
 
-        if (Arrays.stream(arrOfStr).allMatch(s -> s.equals(arrOfStr[0]))) {     //when the array arrOfStr has same numbers.
+        if (Arrays.stream(arrOfStr).allMatch(s -> s.equals(arrOfStr[0]))) {     //if the array arrOfStr has same numbers.
             turn = 0;
-            System.out.println("Die Drehungen sind: " + turn + "\nDie Kombinationsnummer ist: " + startKombination);
+            System.out.println("The turns are: " + turn + "\nThe combination is: " + combination);
         } else {
 
             ArrayList<Integer> sameNumber = new ArrayList<Integer>(); //array for same numbers
             ArrayList<Integer> diffNumber = new ArrayList<Integer>(); //array for different numbers
-            for (int i = 0; i < nummern.length; i++) {           //save the same number in sameNumber array
-                for (int j = i + 1; j < nummern.length; j++) {
-                    if (nummern[i] == nummern[j]) {
-                        sameNumber.add(nummern[i]);
+            for (int i = 0; i < arrNumbers.length; i++) {           //save the same number in sameNumber array
+                for (int j = i + 1; j < arrNumbers.length; j++) {
+                    if (arrNumbers[i] == arrNumbers[j]) {
+                        sameNumber.add(arrNumbers[i]);
                     }
                 }
             }
             if (sameNumber.iterator().hasNext()) {              //if the number were 1234, I will get error because sameNumber.get(0) ist null!
-                for (int i = 0; i < nummern.length; i++) {      ////save the different number in diffNumber array
-                    if (nummern[i] != sameNumber.get(0)) {
-                        diffNumber.add(nummern[i]);
+                for (int i = 0; i < arrNumbers.length; i++) {      ////save the different number in diffNumber array
+                    if (arrNumbers[i] != sameNumber.get(0)) {
+                        diffNumber.add(arrNumbers[i]);
                     }
                 }
             }
@@ -69,24 +69,24 @@ public class ZahlenSchloss {
             //3 numbers same
             if (sameNumber.size() == 3 && diffNumber.size() == 1) {
                 turn = countTurnsOne(diffNumber.get(0), sameNumber.get(0));
-                startKombination = sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0);
-                System.out.println("Die Drehungen sind: " + turn + "\nDie Kombinationsnummer ist: " + startKombination);
+                combination = sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0);
+                System.out.println("The turns are: " + turn + "\nThe combination is: " + combination);
             }
 
             //2 numbers same
             else if (sameNumber.size() == 1 && diffNumber.size() == 2) {
                 turn = countTurnsTwo(diffNumber.get(0), diffNumber.get(1), sameNumber.get(0));
-                startKombination = sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0);
-                System.out.println("Die Drehungen sind: " + turn + "\nDie Kombinationsnummer ist: " + startKombination);
+                combination = sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0);
+                System.out.println("The turns are: " + turn + "\nThe combination is: " + combination);
             }
 
             //2 parallel numbers same
             else if (sameNumber.size() == 2 && diffNumber.size() == 2) {
                 turn = countTurnsTwo(diffNumber.get(0), diffNumber.get(1), sameNumber.get(0));
-                startKombination = sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0);
-                System.out.println("Die Drehungen sind: " + turn + "\nyou have 2 choices: \nFirst: Die Kombinationsnummer ist: " + startKombination);
-                startKombination = diffNumber.get(0) + "" + diffNumber.get(0) + "" + diffNumber.get(0) + "" + diffNumber.get(0);
-                System.out.println("Second: Die Kombinationsnummer ist: " + startKombination);
+                combination = sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0) + "" + sameNumber.get(0);
+                System.out.println("The turns are: " + turn + "\nYou have 2 choices: \nFirst: The combination is: " + combination);
+                combination = diffNumber.get(0) + "" + diffNumber.get(0) + "" + diffNumber.get(0) + "" + diffNumber.get(0);
+                System.out.println("Second: The combination is: " + combination);
             }
 
             // all numbers different
@@ -98,25 +98,26 @@ public class ZahlenSchloss {
                 turn = Math.min(turn1, Math.min(turn2, Math.min(turn3, turn4)));  // take the minitest value of the four turns
 
                 if (turn == turn1) {
-                    startKombination = Integer.parseInt(arrOfStr[3]) + "" + Integer.parseInt(arrOfStr[3]) + "" + Integer.parseInt(arrOfStr[3]) + "" + Integer.parseInt(arrOfStr[3]);
-                    System.out.println("Die Drehungen sind: " + turn + "\nDie Kombinationsnummer ist: " + startKombination);
+                    combination = Integer.parseInt(arrOfStr[3]) + "" + Integer.parseInt(arrOfStr[3]) + "" + Integer.parseInt(arrOfStr[3]) + "" + Integer.parseInt(arrOfStr[3]);
+                    System.out.println("The turns are: " + turn + "\nThe combination is: " + combination);
                 }
                 if (turn == turn2) {
-                    startKombination = Integer.parseInt(arrOfStr[2]) + "" + Integer.parseInt(arrOfStr[2]) + "" + Integer.parseInt(arrOfStr[2]) + "" + Integer.parseInt(arrOfStr[2]);
-                    System.out.println("Die Drehungen sind: " + turn + "\nDie Kombinationsnummer ist: " + startKombination);
+                    combination = Integer.parseInt(arrOfStr[2]) + "" + Integer.parseInt(arrOfStr[2]) + "" + Integer.parseInt(arrOfStr[2]) + "" + Integer.parseInt(arrOfStr[2]);
+                    System.out.println("The turns are: " + turn + "\nThe combination is: " + combination);
                 }
                 if (turn == turn3) {
-                    startKombination = Integer.parseInt(arrOfStr[1]) + "" + Integer.parseInt(arrOfStr[1]) + "" + Integer.parseInt(arrOfStr[1]) + "" + Integer.parseInt(arrOfStr[1]);
-                    System.out.println("Die Drehungen sind: " + turn + "\nDie Kombinationsnummer ist: " + startKombination);
+                    combination = Integer.parseInt(arrOfStr[1]) + "" + Integer.parseInt(arrOfStr[1]) + "" + Integer.parseInt(arrOfStr[1]) + "" + Integer.parseInt(arrOfStr[1]);
+                    System.out.println("The turns are: " + turn + "\nThe combination is: " + combination);
                 }
                 if (turn == turn4) {
-                    startKombination = Integer.parseInt(arrOfStr[0]) + "" + Integer.parseInt(arrOfStr[0]) + "" + Integer.parseInt(arrOfStr[0]) + "" + Integer.parseInt(arrOfStr[0]);
-                    System.out.println("Die Drehungen sind: " + turn + "\nDie Kombinationsnummer ist: " + startKombination);
+                    combination = Integer.parseInt(arrOfStr[0]) + "" + Integer.parseInt(arrOfStr[0]) + "" + Integer.parseInt(arrOfStr[0]) + "" + Integer.parseInt(arrOfStr[0]);
+                    System.out.println("The turns are: " + turn + "\nThe combination is: " + combination);
                 }
             }
         }
-        System.out.print("_________________________________________________\nGeben Sie eine 4-stellige Kombinationsnummer ein!\n");
-        return startKombination;
+        System.out.print("_________________________________________________\n" +
+                        "Please enter a four-digit combination number!\n");
+        return combination;
     }
 
     public static int countTurnsOne(int num1, int goal) {
