@@ -127,6 +127,7 @@ public class BicycleLock {
     }
 
     public static int countTurnsOne(int num1, int goal) {
+        turn=0;
         countUp = 0;
         countDown = 0;
         int j = num1;
@@ -170,7 +171,7 @@ public class BicycleLock {
                     k = 9;
                 }
             }
-            turn += countUp > countDown ? countDown : countUp;
+            turn += Math.min(countUp, countDown);
             loop--;
         }
         return turn;
@@ -198,7 +199,7 @@ public class BicycleLock {
                     k = 9;
                 }
             }
-            turn += countUp > countDown ? countDown : countUp;
+            turn += Math.min(countUp, countDown);
             loop--;
         }
         return turn;
